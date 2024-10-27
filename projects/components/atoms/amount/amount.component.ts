@@ -4,7 +4,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
+  signal
 } from '@angular/core';
 import { currencyFormat } from '@rolster/commons';
 import { RlsTabularTextComponent } from '../tabular-text/tabular-text.component';
@@ -27,16 +28,18 @@ export class RlsAmountComponent implements OnChanges {
   @Input()
   public symbol = '';
 
-  protected valueFormat = '';
+  protected valueFormat = signal('');
 
   public ngOnChanges(changes: SimpleChanges): void {
     const { decimals, value } = changes;
 
     if (value || decimals) {
-      this.valueFormat = currencyFormat({
-        value: value?.currentValue ?? this.value,
-        decimals: decimals?.currentValue ?? this.decimals
-      });
+      this.valueFormat.set(
+        currencyFormat({
+          value: value?.currentValue ?? this.value,
+          decimals: decimals?.currentValue ?? this.decimals
+        })
+      );
     }
   }
 }

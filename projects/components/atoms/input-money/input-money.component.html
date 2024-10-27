@@ -7,7 +7,7 @@
   (value)="onValue($event)"
 >
   <rls-amount
-    [value]="formControl?.signal() || input()"
+    [value]="formControl?.signal() ?? input()"
     [symbol]="symbol"
     [decimals]="decimals"
   >

@@ -3,7 +3,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
+  signal
 } from '@angular/core';
 
 @Component({
@@ -20,13 +21,13 @@ export class RlsIconComponent implements OnChanges {
   @Input()
   public skeleton = false;
 
-  protected className = '';
+  protected className = signal('');
 
   public ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes;
 
     if (value?.currentValue) {
-      this.className = `rls-icon-${value.currentValue}`;
+      this.className.set(`rls-icon-${value.currentValue}`);
     }
   }
 }

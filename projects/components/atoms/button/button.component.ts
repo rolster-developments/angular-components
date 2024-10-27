@@ -6,7 +6,8 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
+  signal
 } from '@angular/core';
 import { RlsIconComponent } from '../icon/icon.component';
 
@@ -33,7 +34,7 @@ export class RlsButtonComponent implements OnInit, OnChanges {
   @Input()
   public suffixIcon = '';
 
-  protected className = 'rls-button__content--raised';
+  protected className = signal('rls-button__content--raised');
 
   constructor(private ref: ElementRef<HTMLButtonElement>) {}
 
@@ -45,7 +46,7 @@ export class RlsButtonComponent implements OnInit, OnChanges {
     const { type } = changes;
 
     if (type?.currentValue) {
-      this.className = `rls-button__content--${type.currentValue}`;
+      this.className.set(`rls-button__content--${type.currentValue}`);
     }
   }
 }

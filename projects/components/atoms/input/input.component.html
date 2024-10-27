@@ -5,12 +5,12 @@
 >
   <input
     class="rls-input__component"
-    [value]="input()"
-    [type]="type"
     autocomplete="off"
+    [type]="type"
     [placeholder]="placeholder"
-    [disabled]="disabledInput"
     [readonly]="readonly"
+    [value]="input()"
+    [disabled]="disabledInput"
     (focus)="onFocus()"
     (blur)="onBlur()"
     (input)="onInput($event)"
