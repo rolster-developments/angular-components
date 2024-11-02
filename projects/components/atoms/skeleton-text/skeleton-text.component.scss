@@ -1,22 +1,20 @@
 // Rolster Technology SkeletonText Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 17/Jun/2022
-// Updated: 26/Oct/2024
+// Updated: 27/Oct/2024
 
 rls-skeleton-text {
   --rlc-skeleton-height: var(--rlc-skeleton-text-height);
 
   position: relative;
   display: block;
+  overflow: inherit;
+  font-weight: inherit;
   font-size: var(--rlc-skeleton-text-font-size);
   letter-spacing: var(--rlc-skeleton-text-letter-spacing);
   line-height: var(--rlc-skeleton-text-height);
-  font-weight: inherit;
-  overflow: inherit;
-  white-space: inherit;
-  text-overflow: inherit;
 
   .rls-skeleton-text {
     &__value {
@@ -27,9 +25,13 @@ rls-skeleton-text {
       font-size: inherit;
       line-height: inherit;
       letter-spacing: inherit;
-      overflow: inherit;
-      white-space: inherit;
-      text-overflow: inherit;
+
+      & > span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }
