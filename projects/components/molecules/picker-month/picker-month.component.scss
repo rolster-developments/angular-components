@@ -8,7 +8,7 @@
 rls-picker-month {
   --pvt-component-background: transparent;
   --pvt-component-font-color: var(--rls-app-color-500);
-  --pvt-component-border: var(--rls-border-1) solid transparent;
+  --pvt-component-border: var(--rls-app-border-1-transparent);
 
   position: relative;
   display: grid;
@@ -56,7 +56,7 @@ rls-picker-month {
       &--disabled {
         --pvt-component-background: transparent;
         --pvt-component-font-color: var(--rls-app-color-100);
-        --pvt-component-border: var(--rls-border-1) solid transparent;
+        --pvt-component-border: var(--rls-app-border-1-transparent);
 
         pointer-events: none;
       }

@@ -36,7 +36,7 @@ rls-bottom-sheet {
       border-radius: var(--rls-sizing-x4) var(--rls-sizing-x4) 0rem 0rem;
       overflow: hidden;
       max-height: calc(
-        100vh - var(--rls-sizing-x32) - var(--rls-sizing-safe-top)
+        var(--rls-html-max-height) - var(--rls-sizing-x32) - var(--rls-sizing-safe-top)
       );
       z-index: var(--rls-z-index-4);
       background: var(--rls-app-background-500);
@@ -58,7 +58,7 @@ rls-bottom-sheet {
     &__component {
       position: relative;
       width: 100%;
-      max-height: calc(100vh - 42rem);
+      max-height: calc(var(--rls-html-max-height) - 42rem);
       overflow: auto;
     }
 
@@ -71,7 +71,6 @@ rls-bottom-sheet {
       bottom: initial;
       opacity: 0;
       z-index: var(--rls-z-index-2);
-      will-change: opacity;
       background: var(--rls-theme-backdrop-900);
       transition:
         opacity 240ms 0ms var(--rls-deceleration-curve),

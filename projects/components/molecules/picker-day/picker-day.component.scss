@@ -8,7 +8,7 @@
 rls-picker-day {
   --pvt-span-background: transparent;
   --pvt-span-font-color: var(--rls-app-color-500);
-  --pvt-span-border: var(--rls-border-1) solid transparent;
+  --pvt-span-border: var(--rls-app-border-1-transparent);
 
   position: relative;
   width: 100%;
@@ -101,7 +101,7 @@ rls-picker-day {
       &--disabled {
         --pvt-span-background: transparent;
         --pvt-span-font-color: var(--rls-app-color-100);
-        --pvt-span-border: var(--rls-border-1) solid transparent;
+        --pvt-span-border: var(--rls-app-border-1-transparent);
 
         pointer-events: none;
       }

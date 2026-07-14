@@ -43,11 +43,10 @@ rls-modal {
       height: var(--pvt-component-height);
       opacity: var(--pvt-component-opacity);
       visibility: var(--pvt-component-visibility);
-      z-index: var(--rls-z-index-2);
+      z-index: var(--rls-z-index-4);
       overflow: hidden;
       border-radius: var(--rls-sizing-x4);
       background: var(--rls-app-background-500);
-      will-change: transform;
       transform: var(--pvt-component-transform);
       transition:
         opacity 125ms 0ms var(--rls-deceleration-curve),
@@ -63,8 +62,7 @@ rls-modal {
       right: 0rem;
       bottom: var(--pvt-backdrop-bottom);
       opacity: var(--pvt-backdrop-opacity);
-      z-index: 1;
-      will-change: opacity;
+      z-index: var(--rls-z-index-2);
       background: var(--rls-theme-backdrop-900);
       backdrop-filter: blur(2px);
       transition:
