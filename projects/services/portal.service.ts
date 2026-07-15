@@ -1,7 +1,6 @@
 import { ComponentType, Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-
 import {
   PortalComponent,
   PortalContainer,

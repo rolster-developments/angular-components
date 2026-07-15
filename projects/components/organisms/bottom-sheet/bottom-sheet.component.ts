@@ -8,7 +8,6 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-
 import { OnPortalContainer, RlsPortalContainerPrivate } from '../../../types';
 
 @Component({

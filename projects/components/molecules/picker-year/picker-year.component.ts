@@ -16,7 +16,6 @@ import {
   YearPickerOptions,
   YearState
 } from '@rolster/components';
-
 import { RlsButtonActionComponent } from '../../atoms';
 
 @Component({

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, ViewEncapsulation } from '@angular/core';
-
 import { RlsIconComponent } from '../icon/icon.component';
 
 @Component({

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { currencyFormat } from '@rolster/commons';
-
 import { RlsTabularTextComponent } from '../tabular-text/tabular-text.component';
 
 @Component({

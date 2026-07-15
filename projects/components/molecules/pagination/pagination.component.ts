@@ -16,7 +16,6 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
-
 import { RlsIconComponent } from '../../atoms';
 
 export interface PaginationEvent<T> {

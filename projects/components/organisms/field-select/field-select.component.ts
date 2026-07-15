@@ -19,7 +19,6 @@ import {
   navigationListFromElement,
   navigationListFromInput
 } from '@rolster/components';
-
 import { RlsIconComponent } from '../../atoms';
 import {
   RlsBallotComponent,

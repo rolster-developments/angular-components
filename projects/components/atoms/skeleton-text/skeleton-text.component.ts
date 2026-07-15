@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, ViewEncapsulation } from '@angular/core';
-
 import { RlsSkeletonComponent } from '../skeleton/skeleton.component';
 
 @Component({

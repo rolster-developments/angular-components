@@ -1,6 +1,5 @@
 import { ComponentType } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-
 import { RlsPortalService } from '../../../services';
 import { OnPortal, RlsPortalProps, RlsPortalPublic } from '../../../types';
 import { RlsBottomSheetComponent } from './bottom-sheet.component';

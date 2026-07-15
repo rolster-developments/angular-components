@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
-
 import { ModalConfirmationOptions } from '../../../models';
 import { RlsButtonComponent } from '../../atoms';
 

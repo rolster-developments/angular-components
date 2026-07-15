@@ -7,7 +7,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
-
 import { RlsInputComponent } from '../input/input.component';
 
 @Component({

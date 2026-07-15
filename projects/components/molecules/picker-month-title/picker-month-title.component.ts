@@ -10,7 +10,6 @@ import { AngularControl } from '@rolster/angular-forms';
 import { valueIsDefined } from '@rolster/commons';
 import { monthLimitTemplate } from '@rolster/components';
 import { Month, MONTH_NAMES } from '@rolster/dates';
-
 import { RlsButtonActionComponent } from '../../atoms';
 
 type PickerMonthTitleType = 'month' | 'year';

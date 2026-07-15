@@ -22,7 +22,6 @@ import {
   assignYearInDate,
   dateFormatTemplate,
   MONTH_NAMES} from '@rolster/dates';
-
 import { RlsButtonComponent, RlsIconComponent } from '../../atoms';
 import {
   RlsPickerDayComponent,

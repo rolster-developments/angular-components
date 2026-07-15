@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { ConfirmationOptions, RlsPortalComponent } from '../../../models';
 import { RlsPortalService } from '../../../services';
 import { RlsConfirmationComponent } from './confirmation.component';

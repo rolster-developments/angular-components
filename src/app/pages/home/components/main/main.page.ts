@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
 import { personsElement } from '../../../../resources/persons';
 
 @Component({

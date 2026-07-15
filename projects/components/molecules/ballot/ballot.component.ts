@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, ViewEncapsulation } from '@angular/core';
-
 import { RlsAvatarComponent, RlsSkeletonTextComponent } from '../../atoms';
 
 @Component({
