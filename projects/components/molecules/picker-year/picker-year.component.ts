@@ -11,12 +11,12 @@ import {
 import { AngularControl } from '@rolster/angular-forms';
 import { itIsDefined } from '@rolster/commons';
 import {
+  checkYearPicker,
+  createYearPicker,
   YearPickerProps,
   YearPickerTemplate,
-  YearState,
-  checkYearPicker,
-  createYearPicker
-} from '@rolster/components';
+  YearState} from '@rolster/components';
+
 import { RlsButtonActionComponent } from '../../atoms';
 
 @Component({

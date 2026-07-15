@@ -5,10 +5,9 @@ import {
   OnChanges,
   OnDestroy,
   Output,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 type InputType = 'text' | 'number' | 'email';

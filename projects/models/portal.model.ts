@@ -2,6 +2,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { ComponentRef } from '@angular/core';
 import { Subject } from 'rxjs';
+
 import {
   OnPortalContainer,
   RlsPortalCallback,

@@ -5,11 +5,10 @@ import {
   Input,
   OnChanges,
   Output,
+  signal,
   SimpleChanges,
   ViewEncapsulation,
-  WritableSignal,
-  signal
-} from '@angular/core';
+  WritableSignal} from '@angular/core';
 import {
   FilterCriteria,
   PageState,
@@ -17,6 +16,7 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
+
 import { RlsIconComponent } from '../../atoms';
 
 export interface PaginationEvent<T> {

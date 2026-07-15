@@ -1,5 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
+
 import { RlsCheckboxComponent } from '../../atoms';
 
 @Component({

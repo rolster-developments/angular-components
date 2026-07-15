@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
+
 import { RlsMessageIconComponent } from '../../atoms/message-icon/message-icon.component';
 
 @Component({

@@ -2,10 +2,9 @@ import {
   Component,
   Input,
   OnChanges,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'rls-icon',

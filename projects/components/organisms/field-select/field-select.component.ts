@@ -9,10 +9,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
 import { AngularControlEmpty } from '@rolster/angular-forms';
 import {
   ListElement,
@@ -20,6 +19,7 @@ import {
   navigationListFromElement,
   navigationListFromInput
 } from '@rolster/components';
+
 import { RlsIconComponent } from '../../atoms';
 import {
   RlsBallotComponent,

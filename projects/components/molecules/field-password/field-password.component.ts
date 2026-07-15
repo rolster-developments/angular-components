@@ -7,6 +7,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
+
 import {
   RlsButtonActionComponent,
   RlsInputPasswordComponent

@@ -5,10 +5,10 @@ import {
   Input,
   OnChanges,
   OnInit,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
+
 import { RlsIconComponent } from '../icon/icon.component';
 
 export type RlsButtonType = 'raised' | 'flat' | 'stroked' | 'outline' | 'ghost';

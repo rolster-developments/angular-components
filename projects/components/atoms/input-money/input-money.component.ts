@@ -3,12 +3,12 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  signal,
+  ViewEncapsulation} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
-import { RlsInputComponent } from '../input/input.component';
+
 import { RlsAmountComponent } from '../amount/amount.component';
+import { RlsInputComponent } from '../input/input.component';
 
 @Component({
   selector: 'rls-input-money',

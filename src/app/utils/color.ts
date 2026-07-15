@@ -1,9 +1,9 @@
 const regexHexadecimal = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 
 export interface ColorRgb {
-  r: number;
-  g: number;
   b: number;
+  g: number;
+  r: number;
 }
 
 export class ColorMaterial {

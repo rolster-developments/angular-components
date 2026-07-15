@@ -1,17 +1,18 @@
-import { Component, ViewEncapsulation, signal } from '@angular/core';
+import { Component, signal,ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@rolster/angular-forms';
+import {
+  RolsterAutocompleteElement,
+  RolsterListElement
+} from '@rolster/components';
+import { DateRange } from '@rolster/dates';
 import { required } from '@rolster/validators/helpers';
+
 import {
   RlsBottomSheetService,
   RlsConfirmationService,
   RlsModalService
 } from '../../../../projects';
 import { OnPortal, RlsPortalPrivate } from '../../../../projects';
-import {
-  RolsterAutocompleteElement,
-  RolsterListElement
-} from '@rolster/components';
-import { DateRange } from '@rolster/dates';
 
 @Component({
   selector: 'rls-portal',

@@ -11,12 +11,11 @@ import {
 import { AngularControl } from '@rolster/angular-forms';
 import { itIsDefined } from '@rolster/commons';
 import {
+  checkDayPicker,
+  createDayPicker,
   DayPickerProps,
   DayState,
-  WeekState,
-  checkDayPicker,
-  createDayPicker
-} from '@rolster/components';
+  WeekState} from '@rolster/components';
 import { DAY_LABELS } from '@rolster/dates';
 
 @Component({

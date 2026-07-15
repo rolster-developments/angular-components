@@ -10,11 +10,10 @@ import {
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 import {
-  MonthPickerProps,
-  MonthState,
   checkMonthPicker,
-  createMonthPicker
-} from '@rolster/components';
+  createMonthPicker,
+  MonthPickerProps,
+  MonthState} from '@rolster/components';
 
 @Component({
   selector: 'rls-picker-month',

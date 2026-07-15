@@ -1,19 +1,30 @@
 import { NgModule } from '@angular/core';
-import { HomePage } from './home.page';
-import { HomePageRouting } from './home.page.routing';
+
 import {
   RlsAmountComponent,
-  RlsButtonComponent,
+  RlsAvatarComponent,
+  RlsBadgeComponent,
+  RlsBallotComponent,
+  RlsBottomSheetComponent,
   RlsButtonActionComponent,
+  RlsButtonComponent,
+  RlsCheckboxComponent,
+  RlsFieldAutocompleteComponent,
+  RlsFieldDateComponent,
+  RlsFieldDateRangeComponent,
   RlsFieldMoneyComponent,
   RlsFieldNumberComponent,
   RlsFieldPasswordComponent,
+  RlsFieldSelectComponent,
   RlsFieldTextComponent,
-  RlsTabularTextComponent,
-  RlsAvatarComponent,
-  RlsBadgeComponent,
-  RlsCheckboxComponent,
+  RlsLabelCheckboxComponent,
   RlsLabelComponent,
+  RlsLabelRadiobuttonComponent,
+  RlsLabelSwitchComponent,
+  RlsPaginationComponent,
+  RlsPickerDateComponent,
+  RlsPickerDateRangeComponent,
+  RlsPickerDayRangeComponent,
   RlsPosterComponent,
   RlsProgressBarComponent,
   RlsProgressCircularComponent,
@@ -21,20 +32,9 @@ import {
   RlsSkeletonComponent,
   RlsSkeletonTextComponent,
   RlsSwitchComponent,
-  RlsBallotComponent,
-  RlsLabelCheckboxComponent,
-  RlsLabelRadiobuttonComponent,
-  RlsLabelSwitchComponent,
-  RlsBottomSheetComponent,
-  RlsPickerDateComponent,
-  RlsFieldDateComponent,
-  RlsPickerDayRangeComponent,
-  RlsPaginationComponent,
-  RlsFieldSelectComponent,
-  RlsFieldAutocompleteComponent,
-  RlsPickerDateRangeComponent,
-  RlsFieldDateRangeComponent
-} from '../../../../projects';
+  RlsTabularTextComponent} from '../../../../projects';
+import { HomePage } from './home.page';
+import { HomePageRouting } from './home.page.routing';
 
 @NgModule({
   declarations: [HomePage],

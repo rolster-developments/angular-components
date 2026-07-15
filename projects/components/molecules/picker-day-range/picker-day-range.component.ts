@@ -7,16 +7,15 @@ import {
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 import {
+  createDayRangePicker,
   DayRangePickerProps,
   DayRangeState,
-  WeekRangeState,
-  createDayRangePicker
-} from '@rolster/components';
+  WeekRangeState} from '@rolster/components';
 import {
-  DAY_LABELS,
-  DateRange,
   assignDayInDate,
   dateIsBefore,
+  DateRange,
+  DAY_LABELS,
   normalizeMinTime
 } from '@rolster/dates';
 

@@ -3,10 +3,10 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  signal,
+  ViewEncapsulation} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
+
 import { RlsInputComponent } from '../input/input.component';
 
 @Component({

@@ -1,9 +1,8 @@
 import {
   AngularControl,
+  formControl,
   FormControls,
-  FormGroup,
-  formControl
-} from '@rolster/angular-forms';
+  FormGroup} from '@rolster/angular-forms';
 import { DateRange } from '@rolster/dates';
 
 interface PickerDateRangeControls extends FormControls {

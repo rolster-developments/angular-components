@@ -3,11 +3,11 @@ import {
   Component,
   Input,
   OnChanges,
+  signal,
   SimpleChanges,
-  ViewEncapsulation,
-  signal
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
 import { currencyFormat } from '@rolster/commons';
+
 import { RlsTabularTextComponent } from '../tabular-text/tabular-text.component';
 
 @Component({

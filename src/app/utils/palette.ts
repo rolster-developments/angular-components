@@ -1,18 +1,18 @@
 import { ColorMaterial, ColorRgb } from './color';
 
 export interface PaletteMaterialFont {
+  disabled: string;
   primary: string;
   secondary: string;
-  disabled: string;
 }
 
 export interface PaletteMaterialColor {
   color: string;
-  rgb: string;
-  material: ColorMaterial;
   key: string;
-  font?: PaletteMaterialFont;
+  material: ColorMaterial;
+  rgb: string;
   border?: string;
+  font?: PaletteMaterialFont;
   ripple?: string;
 }
 

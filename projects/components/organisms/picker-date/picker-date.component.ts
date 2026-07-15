@@ -13,17 +13,16 @@ import {
 import { AngularControlEmpty } from '@rolster/angular-forms';
 import { itIsDefined } from '@rolster/commons';
 import {
+  checkDateRange,
   PickerListener,
-  PickerListenerType,
-  checkDateRange
-} from '@rolster/components';
+  PickerListenerType} from '@rolster/components';
 import {
-  MONTH_NAMES,
   assignDayInDate,
   assignMonthInDate,
   assignYearInDate,
-  dateFormatTemplate
-} from '@rolster/dates';
+  dateFormatTemplate,
+  MONTH_NAMES} from '@rolster/dates';
+
 import { RlsButtonComponent, RlsIconComponent } from '../../atoms';
 import {
   RlsPickerDayComponent,
