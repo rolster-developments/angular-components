@@ -1,6 +1,6 @@
 <div class="rls-message-icon">
-  @if (icon) {
-    <rls-icon [value]="icon"></rls-icon>
+  @if (icon()) {
+    <rls-icon [value]="icon()"></rls-icon>
   }
 
   <span class="truncate"><ng-content /></span>

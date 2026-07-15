@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 import { RlsAvatarComponent, RlsSkeletonTextComponent } from '../../atoms';
 
@@ -12,18 +12,13 @@ import { RlsAvatarComponent, RlsSkeletonTextComponent } from '../../atoms';
   imports: [CommonModule, RlsAvatarComponent, RlsSkeletonTextComponent]
 })
 export class RlsBallotComponent {
-  @Input()
-  public initials?: string;
+  public initials = input<string>();
 
-  @Input()
-  public subtitle?: string;
+  public subtitle = input<string>();
 
-  @Input()
-  public img?: string;
+  public img = input<string>();
 
-  @Input()
-  public bordered = false;
+  public bordered = input(false);
 
-  @Input()
-  public skeleton = false;
+  public skeleton = input(false);
 }

@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  computed,
   ElementRef,
-  Input,
-  OnChanges,
+  input,
   OnInit,
-  signal,
-  SimpleChanges,
-  ViewEncapsulation} from '@angular/core';
+  ViewEncapsulation
+} from '@angular/core';
 
 import { RlsIconComponent } from '../icon/icon.component';
 
@@ -21,32 +20,20 @@ export type RlsButtonType = 'raised' | 'flat' | 'stroked' | 'outline' | 'ghost';
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, RlsIconComponent]
 })
-export class RlsButtonComponent implements OnInit, OnChanges {
-  @Input('rls-button')
-  public type: RlsButtonType = 'raised';
+export class RlsButtonComponent implements OnInit {
+  public type = input<RlsButtonType>('raised', { alias: 'rls-button' });
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Input()
-  public prefixIcon = '';
+  public prefixIcon = input('');
 
-  @Input()
-  public suffixIcon = '';
+  public suffixIcon = input('');
 
-  protected className = signal('rls-button__content--raised');
+  protected className = computed(() => `rls-button__content--${this.type()}`);
 
   constructor(private ref: ElementRef<HTMLButtonElement>) {}
 
   public ngOnInit(): void {
     this.ref.nativeElement.classList.add('rls-button');
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { type } = changes;
-
-    if (type?.currentValue) {
-      this.className.set(`rls-button__content--${type.currentValue}`);
-    }
   }
 }

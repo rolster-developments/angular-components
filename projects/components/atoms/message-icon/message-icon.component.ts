@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 import { RlsIconComponent } from '../icon/icon.component';
 
@@ -12,6 +12,5 @@ import { RlsIconComponent } from '../icon/icon.component';
   imports: [CommonModule, RlsIconComponent]
 })
 export class RlsMessageIconComponent {
-  @Input()
-  public icon?: string;
+  public icon = input<string>();
 }

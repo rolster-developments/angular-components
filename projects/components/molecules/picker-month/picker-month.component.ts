@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
+  computed,
+  effect,
+  input,
+  signal,
+  untracked,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 import {
-  checkMonthPicker,
   createMonthPicker,
-  MonthPickerProps,
-  MonthState} from '@rolster/components';
+  MonthPickerOptions,
+  MonthState,
+  verifyMonthPicker
+} from '@rolster/components';
 
 @Component({
   selector: 'rls-picker-month',
@@ -23,99 +24,56 @@ import {
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule]
 })
-export class RlsPickerMonthComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  public formControl?: AngularControl<number>;
+export class RlsPickerMonthComponent {
+  public formControl = input<AngularControl<number>>();
 
-  @Input()
-  public date: Date;
+  public date = input(new Date());
 
-  @Input()
-  public year?: number;
+  public year = input<number>();
 
-  @Input()
-  public minDate?: Date;
+  public minDate = input<Date>();
 
-  @Input()
-  public maxDate?: Date;
+  public maxDate = input<Date>();
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  private unsubscription?: () => void;
+  private localValue = signal(new Date().getMonth());
 
-  private value: number;
+  protected month = computed(
+    () => this.formControl()?.value() ?? this.localValue()
+  );
 
-  protected months: MonthState[] = [];
+  private options = computed<MonthPickerOptions>(() => ({
+    date: this.date(),
+    month: this.month(),
+    year: this.year() || this.date().getFullYear(),
+    minDate: this.minDate(),
+    maxDate: this.maxDate()
+  }));
+
+  protected months = computed(() => createMonthPicker(this.options()));
 
   constructor() {
-    this.date = new Date();
-    this.year = this.date.getFullYear();
-    this.value = this.date.getMonth();
-  }
-
-  public ngOnInit(): void {
-    this.renderComponent(this.createPickerProps());
-  }
-
-  public ngOnDestroy(): void {
-    this.unsubscription && this.unsubscription();
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { date, formControl, maxDate, minDate, year } = changes;
-
-    if (date || minDate || maxDate || year) {
-      const props = this.createPickerProps();
-      const month = checkMonthPicker(props);
+    effect(() => {
+      const month = verifyMonthPicker(this.options());
 
       if (month) {
-        this.formControl
-          ? this.formControl.setValue(month)
-          : (this.value = month);
-      } else {
-        this.renderComponent(props);
+        untracked(() => this.setValue(month));
       }
-    }
-
-    if (formControl) {
-      this.unsubscription && this.unsubscription();
-
-      this.unsubscription = formControl.currentValue?.subscribe(
-        (value: number) => {
-          this.setValue(value ?? this.date.getMonth());
-        }
-      );
-    }
+    });
   }
 
   public onSelect({ value }: MonthState): void {
-    this.formControl?.setValue(value);
-  }
-
-  private createPickerProps(): MonthPickerProps {
-    return {
-      date: this.date,
-      month: this.formControl?.value ?? this.value,
-      year: this.year || this.date.getFullYear(),
-      minDate: this.minDate,
-      maxDate: this.maxDate
-    };
+    this.setValue(value);
   }
 
   private setValue(value: number): void {
-    const props = this.createPickerProps();
-    const month = checkMonthPicker(props);
+    const control = this.formControl();
 
-    if (month) {
-      this.formControl?.setValue(month);
+    if (control) {
+      control.setValue(value);
     } else {
-      this.value = value;
-      this.renderComponent(props);
+      this.localValue.set(value);
     }
-  }
-
-  private renderComponent(props: MonthPickerProps): void {
-    this.months = createMonthPicker(props);
   }
 }

@@ -1,10 +1,10 @@
 <div
   class="rls-field-box rls-field-money"
-  [class.rls-field-box--focused]="formControl?.focused"
-  [class.rls-field-box--error]="formControl?.wrong"
-  [class.rls-field-box--disabled]="disabledInput"
+  [class.rls-field-box--focused]="formControl()?.focused()"
+  [class.rls-field-box--error]="formControl()?.wrong()"
+  [class.rls-field-box--disabled]="disabledInput()"
 >
-  @if (label) {
+  @if (label()) {
     <label class="rls-field-box__label">
       <ng-content />
     </label>
@@ -13,12 +13,12 @@
   <div class="rls-field-box__component">
     <div class="rls-field-box__body">
       <rls-input-money
-        [formControl]="formControl"
-        [placeholder]="placeholder"
-        [decimals]="decimals"
-        [readonly]="readonly"
-        [disabled]="disabled"
-        [symbol]="symbol"
+        [formControl]="formControl()"
+        [placeholder]="placeholder()"
+        [decimals]="decimals()"
+        [readonly]="readonly()"
+        [disabled]="disabled()"
+        [symbol]="symbol()"
         (value)="onValue($event)"
       >
       </rls-input-money>
@@ -27,7 +27,7 @@
 
   <rls-message-form-error
     className="rls-field-box__error"
-    [formControl]="formControl"
+    [formControl]="formControl()"
   >
   </rls-message-form-error>
 </div>

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  computed,
+  input,
+  output,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
@@ -17,34 +17,28 @@ import { RlsMessageFormErrorComponent } from '../message-form-error/message-form
   templateUrl: 'field-number.component.html',
   styleUrls: ['field-number.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [CommonModule, RlsInputNumberComponent, RlsMessageFormErrorComponent]
+  imports: [
+    CommonModule,
+    RlsInputNumberComponent,
+    RlsMessageFormErrorComponent
+  ]
 })
 export class RlsFieldNumberComponent {
-  @Input()
-  public formControl?: AngularControl<number>;
+  public formControl = input<AngularControl<number>>();
 
-  @Input()
-  public label = true;
+  public label = input(true);
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<number>;
+  public value = output<number>();
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
-
-  public get disabledInput(): boolean {
-    return this.formControl?.disabled ?? this.disabled;
-  }
+  protected disabledInput = computed(
+    () => this.formControl()?.disabled() ?? this.disabled()
+  );
 
   public onValue(value: number): void {
     this.value.emit(value);

@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
+  computed,
+  effect,
+  input,
+  signal,
+  untracked,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import {
-  checkYearPicker,
   createYearPicker,
-  YearPickerProps,
-  YearPickerTemplate,
-  YearState} from '@rolster/components';
+  verifyYearPicker,
+  YearPickerOptions,
+  YearState
+} from '@rolster/components';
 
 import { RlsButtonActionComponent } from '../../atoms';
 
@@ -27,116 +27,78 @@ import { RlsButtonActionComponent } from '../../atoms';
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, RlsButtonActionComponent]
 })
-export class RlsPickerYearComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  public formControl?: AngularControl<number>;
+export class RlsPickerYearComponent {
+  public formControl = input<AngularControl<number>>();
 
-  @Input()
-  public date: Date;
+  public date = input(new Date());
 
-  @Input()
-  public minDate?: Date;
+  public minDate = input<Date>();
 
-  @Input()
-  public maxDate?: Date;
+  public maxDate = input<Date>();
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  private unsubscription?: () => void;
+  private localValue = signal(new Date().getFullYear());
 
-  private value: number;
+  protected selectedYear = computed(
+    () => this.formControl()?.value() ?? this.localValue()
+  );
 
-  private year: number;
+  private anchor = signal(new Date().getFullYear());
 
-  protected template: YearPickerTemplate;
+  private validationOptions = computed<YearPickerOptions>(() => ({
+    date: this.date(),
+    year: this.selectedYear() || this.date().getFullYear(),
+    minDate: this.minDate(),
+    maxDate: this.maxDate()
+  }));
+
+  private renderOptions = computed<YearPickerOptions>(() => ({
+    date: this.date(),
+    year: this.anchor() || this.selectedYear() || this.date().getFullYear(),
+    minDate: this.minDate(),
+    maxDate: this.maxDate()
+  }));
+
+  protected template = computed(() => createYearPicker(this.renderOptions()));
 
   constructor() {
-    this.date = new Date();
+    effect(() => {
+      const year = this.selectedYear();
 
-    this.value = this.date.getFullYear();
-    this.year = this.value;
+      untracked(() => this.anchor.set(year));
+    });
 
-    this.template = createYearPicker(this.createPickerProps());
-  }
+    effect(() => {
+      const year = verifyYearPicker(this.validationOptions());
 
-  public ngOnInit(): void {
-    this.renderComponent(this.createPickerProps());
-  }
-
-  public ngOnDestroy(): void {
-    this.unsubscription && this.unsubscription();
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { date, formControl, maxDate, minDate } = changes;
-
-    if (date || minDate || maxDate) {
-      const props = this.createPickerProps();
-      const year = checkYearPicker(props);
-
-      if (year) {
-        if (this.formControl) {
-          this.formControl.setValue(year);
-        } else {
-          this.year = year;
-          this.value = year;
-        }
-      } else {
-        this.renderComponent(props);
+      if (valueIsDefined(year)) {
+        untracked(() => this.setValue(year));
       }
-    }
-
-    if (formControl) {
-      this.unsubscription && this.unsubscription();
-
-      this.unsubscription = formControl.currentValue?.subscribe(
-        (year: number) => {
-          this.setValue(year ?? this.date.getFullYear());
-        }
-      );
-    }
+    });
   }
 
   public onSelect({ value }: YearState): void {
     if (value) {
-      this.formControl?.setValue(value);
+      this.setValue(value);
     }
   }
 
   public onPrev(): void {
-    this.year = this.year - 8; // Disminuyendo rango
-    this.renderComponent(this.createPickerProps(this.year));
+    this.anchor.set(this.anchor() - 8);
   }
 
   public onNext(): void {
-    this.year = this.year + 8; // Incrementando rango
-    this.renderComponent(this.createPickerProps(this.year));
-  }
-
-  private createPickerProps(year?: number): YearPickerProps {
-    return {
-      date: this.date,
-      year: year || this.value || this.date.getFullYear(),
-      minDate: this.minDate,
-      maxDate: this.maxDate
-    };
+    this.anchor.set(this.anchor() + 8);
   }
 
   private setValue(value: number): void {
-    const props = this.createPickerProps(value);
-    const year = checkYearPicker(props);
+    const control = this.formControl();
 
-    if (itIsDefined(year)) {
-      this.formControl?.setValue(year);
+    if (control) {
+      control.setValue(value);
     } else {
-      this.value = value;
-      this.year = value;
-      this.renderComponent(props);
+      this.localValue.set(value);
     }
-  }
-
-  private renderComponent(props: YearPickerProps): void {
-    this.template = createYearPicker(props);
   }
 }

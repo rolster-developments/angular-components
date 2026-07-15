@@ -1,4 +1,10 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 import { RlsCheckboxComponent } from '../../atoms';
@@ -12,26 +18,25 @@ import { RlsCheckboxComponent } from '../../atoms';
   imports: [RlsCheckboxComponent]
 })
 export class RlsLabelCheckboxComponent {
-  @Input()
-  public formControl?: AngularControl<boolean>;
+  public formControl = input<AngularControl<boolean>>();
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Input()
-  public extended = false;
+  public extended = input(false);
 
-  private currentState = false;
+  private currentState = signal(false);
 
-  protected get checked(): boolean {
-    return this.formControl?.value ?? this.currentState;
-  }
+  protected checked = computed(
+    () => this.formControl()?.value() ?? this.currentState()
+  );
 
   public onToggle(): void {
-    if (this.formControl) {
-      this.formControl.setValue(!this.formControl.value);
+    const control = this.formControl();
+
+    if (control) {
+      control.setValue(!control.value());
     }
 
-    this.currentState = !this.currentState;
+    this.currentState.set(!this.currentState());
   }
 }

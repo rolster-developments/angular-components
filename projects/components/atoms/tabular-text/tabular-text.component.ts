@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 const CLASS_BASE = 'rls-tabular-text';
 const POINTERS = ['.', ','];
@@ -13,8 +13,7 @@ const POINTERS = ['.', ','];
   imports: [CommonModule]
 })
 export class RlsTabularTextComponent {
-  @Input()
-  public value = '';
+  public value = input('');
 
   protected getClassCharacter(character: string): string {
     return POINTERS.includes(character)

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
-  Input,
+  input,
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
@@ -18,14 +18,11 @@ import { RlsIconComponent } from '../icon/icon.component';
   imports: [CommonModule, RlsIconComponent]
 })
 export class RlsButtonActionComponent implements OnInit {
-  @Input('rls-button-action')
-  public icon = '';
+  public icon = input('', { alias: 'rls-button-action' });
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Input()
-  public tooltip = '';
+  public tooltip = input('');
 
   constructor(private ref: ElementRef<HTMLButtonElement>) {}
 

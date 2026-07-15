@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  Input,
-  OnChanges,
-  signal,
-  SimpleChanges,
-  ViewEncapsulation} from '@angular/core';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { currencyFormat } from '@rolster/commons';
 
 import { RlsTabularTextComponent } from '../tabular-text/tabular-text.component';
@@ -18,28 +12,17 @@ import { RlsTabularTextComponent } from '../tabular-text/tabular-text.component'
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, RlsTabularTextComponent]
 })
-export class RlsAmountComponent implements OnChanges {
-  @Input()
-  public value = 0;
+export class RlsAmountComponent {
+  public value = input(0);
 
-  @Input()
-  public decimals = false;
+  public decimals = input(false);
 
-  @Input()
-  public symbol = '';
+  public symbol = input('');
 
-  protected valueFormat = signal('');
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { decimals, value } = changes;
-
-    if (value || decimals) {
-      this.valueFormat.set(
-        currencyFormat({
-          value: value?.currentValue ?? this.value,
-          decimals: decimals?.currentValue ?? this.decimals
-        })
-      );
-    }
-  }
+  protected valueFormat = computed(() =>
+    currencyFormat({
+      value: this.value(),
+      decimals: Number(this.decimals())
+    })
+  );
 }

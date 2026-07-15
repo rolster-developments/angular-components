@@ -3,25 +3,25 @@
     <button
       rls-button-action="arrow-ios-left"
       (click)="onPrev()"
-      [disabled]="!template.canPrevious"
+      [disabled]="!template().canPrevious"
     ></button>
   </div>
 
   <label className="rls-title-bold">
-    {{ template.minRange }} - {{ template.maxRange }}
+    {{ template().minRange }} - {{ template().maxRange }}
   </label>
 
   <div class="rls-picker-year__action rls-picker-year__action--next">
     <button
       rls-button-action="arrow-ios-right"
       (click)="onNext()"
-      [disabled]="!template.canNext"
+      [disabled]="!template().canNext"
     ></button>
   </div>
 </div>
 
 <div class="rls-picker-year__component">
-  @for (year of template.years; track year) {
+  @for (year of template().years; track year) {
     <div
       class="rls-picker-year__year"
       [class.rls-picker-year__year--selected]="year.selected"

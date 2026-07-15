@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  computed,
+  input,
+  output,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
@@ -22,34 +22,23 @@ type TextType = 'text' | 'email';
   imports: [CommonModule, RlsInputTextComponent, RlsMessageFormErrorComponent]
 })
 export class RlsFieldTextComponent {
-  @Input()
-  public formControl?: AngularControl<string>;
+  public formControl = input<AngularControl<string>>();
 
-  @Input()
-  public type: TextType = 'text';
+  public type = input<TextType>('text');
 
-  @Input()
-  public label = true;
+  public label = input(true);
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<string>;
+  public value = output<string>();
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
-
-  public get disabledInput(): boolean {
-    return this.formControl?.disabled ?? this.disabled;
-  }
+  protected disabledInput = computed(
+    () => this.formControl()?.disabled() ?? this.disabled()
+  );
 
   public onValue(value: string): void {
     this.value.emit(value);

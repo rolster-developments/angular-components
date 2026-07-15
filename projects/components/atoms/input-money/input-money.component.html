@@ -1,15 +1,15 @@
 <rls-input
-  [formControl]="formControl"
+  [formControl]="formControl()"
   type="number"
-  [readonly]="readonly"
-  [disabled]="disabled"
-  [placeholder]="placeholder"
+  [readonly]="readonly()"
+  [disabled]="disabled()"
+  [placeholder]="placeholder()"
   (value)="onValue($event)"
 >
   <rls-amount
-    [value]="formControl?.signal() ?? input()"
-    [symbol]="symbol"
-    [decimals]="decimals"
+    [value]="inputValue()"
+    [symbol]="symbol()"
+    [decimals]="decimals()"
   >
   </rls-amount>
 </rls-input>

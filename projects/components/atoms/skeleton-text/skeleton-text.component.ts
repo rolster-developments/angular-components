@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 import { RlsSkeletonComponent } from '../skeleton/skeleton.component';
 
@@ -12,6 +12,5 @@ import { RlsSkeletonComponent } from '../skeleton/skeleton.component';
   imports: [CommonModule, RlsSkeletonComponent]
 })
 export class RlsSkeletonTextComponent {
-  @Input()
-  public active = false;
+  public active = input(false);
 }

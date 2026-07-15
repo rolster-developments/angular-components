@@ -1,10 +1,10 @@
 <rls-input
-  [formControl]="formControl"
-  [type]="type"
-  [readonly]="readonly"
-  [disabled]="disabled"
-  [placeholder]="placeholder"
+  [formControl]="formControl()"
+  [type]="type()"
+  [readonly]="readonly()"
+  [disabled]="disabled()"
+  [placeholder]="placeholder()"
   (value)="onValue($event)"
 >
-  {{ formControl?.signal() || input() }}
+  {{ inputValue() }}
 </rls-input>

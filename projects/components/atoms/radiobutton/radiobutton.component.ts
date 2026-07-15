@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'rls-radiobutton',
@@ -8,9 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RlsRadiobuttonComponent {
-  @Input()
-  public checked = false;
+  public checked = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 }

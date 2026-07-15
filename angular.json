@@ -111,7 +111,7 @@
     "@rolster/angular-components": {
       "projectType": "application",
       "root": "projects",
-      "sourceRoot": "projects/src",
+      "sourceRoot": "projects",
       "prefix": "rls",
       "architect": {
         "build": {

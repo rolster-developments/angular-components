@@ -1,10 +1,10 @@
 <div
   class="rls-label-checkbox"
-  [class.rls-label-checkbox--disabled]="disabled"
-  [class.rls-label-checkbox--extended]="extended"
+  [class.rls-label-checkbox--disabled]="disabled()"
+  [class.rls-label-checkbox--extended]="extended()"
 >
   <div class="rls-label-checkbox__component" (click)="onToggle()">
-    <rls-checkbox [checked]="checked" [disabled]="disabled" />
+    <rls-checkbox [checked]="checked()" [disabled]="disabled()" />
   </div>
 
   <label class="rls-label-checkbox__text"> <ng-content /> </label>

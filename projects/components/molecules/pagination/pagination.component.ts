@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
+  effect,
+  input,
+  output,
   signal,
-  SimpleChanges,
+  untracked,
   ViewEncapsulation,
-  WritableSignal} from '@angular/core';
+  WritableSignal
+} from '@angular/core';
 import {
   FilterCriteria,
   PageState,
@@ -33,18 +33,14 @@ export interface PaginationEvent<T> {
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, RlsIconComponent]
 })
-export class RlsPaginationComponent<T = any> implements OnChanges {
-  @Input()
-  public suggestions: T[] = [];
+export class RlsPaginationComponent<T = any> {
+  public suggestions = input<T[]>([]);
 
-  @Input()
-  public count?: number;
+  public count = input<number>();
 
-  @Input()
-  public filter?: FilterCriteria<T>;
+  public filter = input<FilterCriteria<T>>();
 
-  @Output()
-  public pagination: EventEmitter<PaginationEvent<T>>;
+  public pagination = output<PaginationEvent<T>>();
 
   private controller: PaginationController<T>;
 
@@ -52,23 +48,20 @@ export class RlsPaginationComponent<T = any> implements OnChanges {
 
   constructor() {
     this.controller = new PaginationController({
-      count: this.count,
-      suggestions: this.suggestions
+      count: this.count(),
+      suggestions: this.suggestions()
     });
 
     this.template = signal(this.controller.template);
 
-    this.pagination = new EventEmitter();
-  }
+    effect(() => {
+      const suggestions = this.suggestions();
+      const count = this.count();
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { count, filter, suggestions } = changes;
-
-    if (suggestions || count) {
       this.controller = new PaginationController({
-        suggestions: suggestions.currentValue ?? this.suggestions,
-        count: count.currentValue ?? this.count,
-        position: this.template().currentPage.value
+        suggestions,
+        count,
+        position: untracked(() => this.template().currentPage.value)
       });
 
       this.pagination.emit({
@@ -78,13 +71,15 @@ export class RlsPaginationComponent<T = any> implements OnChanges {
       });
 
       this.template.set(this.controller.template);
-    }
+    });
 
-    if (filter) {
-      const { template } = this.controller.filtrable(filter.currentValue);
+    effect(() => {
+      const filter = this.filter();
+
+      const { template } = untracked(() => this.controller.filtrable(filter));
 
       this.template.set(template);
-    }
+    });
   }
 
   public goToPagination(page: PageState): void {

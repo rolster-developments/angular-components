@@ -1,10 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  computed,
+  input,
+  output,
   signal,
-  ViewEncapsulation} from '@angular/core';
+  ViewEncapsulation
+} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 import { RlsInputComponent } from '../input/input.component';
@@ -18,29 +19,24 @@ import { RlsInputComponent } from '../input/input.component';
   imports: [RlsInputComponent]
 })
 export class RlsInputNumberComponent {
-  @Input()
-  public formControl?: AngularControl<number>;
+  public formControl = input<AngularControl<number>>();
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<number>;
+  public value = output<number>();
 
-  protected input = signal<number>(0);
+  private localValue = signal(0);
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
+  protected inputValue = computed(
+    () => this.formControl()?.value() ?? this.localValue()
+  );
 
   public onValue(value: number): void {
-    this.input.set(value);
+    this.localValue.set(value);
     this.value.emit(value);
   }
 }

@@ -1,7 +1,7 @@
-@if (formControl?.wrong) {
-  <div [class]="className">
+@if (formControl()?.wrong()) {
+  <div [class]="className()">
     <rls-message-icon icon="alert-triangle" rls-theme="danger">
-      {{ formControl?.error?.message }}
+      {{ formControl()?.error()?.message }}
     </rls-message-icon>
   </div>
 }

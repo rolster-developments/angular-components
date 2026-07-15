@@ -1,4 +1,10 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 import { RlsRadiobuttonComponent } from '../../atoms';
@@ -12,29 +18,29 @@ import { RlsRadiobuttonComponent } from '../../atoms';
   imports: [RlsRadiobuttonComponent]
 })
 export class RlsLabelRadiobuttonComponent<T = any> {
-  @Input()
-  public formControl?: AngularControl<T | undefined>;
+  public formControl = input<AngularControl<T | undefined>>();
 
-  @Input()
-  public value?: T;
+  public value = input<T>();
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Input()
-  public extended = false;
+  public extended = input(false);
 
-  private currentState?: T;
+  private currentState = signal<T | undefined>(undefined);
 
-  protected get checked(): boolean {
-    return (this.formControl?.value ?? this.currentState) === this.value;
-  }
+  protected checked = computed(
+    () =>
+      (this.formControl()?.value() ?? this.currentState()) === this.value()
+  );
 
   public onSelect(): void {
-    if (this.formControl) {
-      this.formControl?.setValue(this.value);
+    const control = this.formControl();
+    const value = this.value();
+
+    if (control) {
+      control.setValue(value);
     }
 
-    this.currentState = this.value;
+    this.currentState.set(value);
   }
 }

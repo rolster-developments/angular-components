@@ -1,4 +1,4 @@
-@for (char of value.split(''); track $index) {
+@for (char of value().split(''); track $index) {
   <span [class]="getClassCharacter(char)">
     {{ char }}
   </span>

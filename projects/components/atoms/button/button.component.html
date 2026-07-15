@@ -1,13 +1,13 @@
 <div class="rls-button__content" [class]="className()">
-  @if (prefixIcon) {
-    <rls-icon [value]="prefixIcon"></rls-icon>
+  @if (prefixIcon()) {
+    <rls-icon [value]="prefixIcon()"></rls-icon>
   }
 
   <div class="rls-button__label">
     <ng-content />
   </div>
 
-  @if (suffixIcon) {
-    <rls-icon [value]="suffixIcon"></rls-icon>
+  @if (suffixIcon()) {
+    <rls-icon [value]="suffixIcon()"></rls-icon>
   }
 </div>

@@ -1,9 +1,9 @@
 <div class="rls-button-action__content">
-  <rls-icon [value]="icon"></rls-icon>
+  <rls-icon [value]="icon()"></rls-icon>
 </div>
 
-@if (tooltip) {
+@if (tooltip()) {
   <div class="rls-button-action__tooltip rls-caption-semibold">
-    <span>{{ tooltip }}</span>
+    <span>{{ tooltip() }}</span>
   </div>
 }

@@ -1,16 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Input,
-  SimpleChanges,
+  computed,
+  input,
+  signal,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
-import {
-  createDayRangePicker,
-  DayRangePickerProps,
-  DayRangeState,
-  WeekRangeState} from '@rolster/components';
+import { createDayRangePicker, DayRangeState } from '@rolster/components';
 import {
   assignDayInDate,
   dateIsBefore,
@@ -28,85 +25,48 @@ import {
   imports: [CommonModule]
 })
 export class RlsPickerDayRangeComponent {
-  @Input()
-  public formControl?: AngularControl<DateRange>;
+  public formControl = input<AngularControl<DateRange>>();
 
-  @Input()
-  public date?: Date;
+  public date = input<Date>();
 
-  @Input()
-  public minDate?: Date;
+  public minDate = input<Date>();
 
-  @Input()
-  public maxDate?: Date;
+  public maxDate = input<Date>();
 
-  @Input()
-  public disabled = false;
-
-  private currentRange: DateRange;
-
-  private sourceDate: Date;
+  public disabled = input(false);
 
   protected titles = DAY_LABELS();
 
-  protected weeks: WeekRangeState[] = [];
+  private currentRange = signal(DateRange.now());
 
-  constructor() {
-    this.currentRange = DateRange.now();
-    this.sourceDate = this.currentRange.minDate;
-  }
+  private sourceDate = signal(this.currentRange().minDate);
 
-  public ngOnInit(): void {
-    this.renderComponent({
-      date: this.currentDate,
-      range: this.currentRange,
-      sourceDate: this.sourceDate,
-      maxDate: this.maxDate,
-      minDate: this.minDate
-    });
-  }
+  private currentDate = computed(() =>
+    normalizeMinTime(this.date() || this.currentRange().minDate)
+  );
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { date, maxDate, minDate } = changes;
-
-    if (date || minDate || maxDate) {
-      this.renderComponent({
-        date: date?.currentValue || this.currentDate,
-        range: this.currentRange,
-        sourceDate: this.sourceDate,
-        maxDate: maxDate?.currentValue || this.maxDate,
-        minDate: minDate?.currentValue || this.minDate
-      });
-    }
-  }
-
-  private get currentDate(): Date {
-    return normalizeMinTime(this.date || this.currentRange.minDate);
-  }
+  protected weeks = computed(() =>
+    createDayRangePicker({
+      date: this.currentDate(),
+      range: this.currentRange(),
+      sourceDate: this.sourceDate(),
+      maxDate: this.maxDate(),
+      minDate: this.minDate()
+    })
+  );
 
   public onSelect({ value }: DayRangeState): void {
     if (value) {
-      const date = assignDayInDate(this.currentDate, value);
+      const date = assignDayInDate(this.currentDate(), value);
+      const source = this.sourceDate();
 
-      const range = dateIsBefore(date, this.sourceDate)
-        ? new DateRange(this.sourceDate, date)
-        : new DateRange(date, this.sourceDate);
+      const range = dateIsBefore(date, source)
+        ? new DateRange(source, date)
+        : new DateRange(date, source);
 
-      this.sourceDate = date;
-      this.currentRange = range;
-      this.formControl?.setValue(range);
-
-      this.renderComponent({
-        date,
-        range,
-        sourceDate: this.sourceDate,
-        maxDate: this.maxDate,
-        minDate: this.minDate
-      });
+      this.sourceDate.set(date);
+      this.currentRange.set(range);
+      this.formControl()?.setValue(range);
     }
-  }
-
-  private renderComponent(props: DayRangePickerProps): void {
-    this.weeks = createDayRangePicker(props);
   }
 }

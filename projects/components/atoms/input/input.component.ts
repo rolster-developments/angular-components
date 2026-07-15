@@ -1,13 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Output,
+  computed,
+  input,
+  output,
   signal,
-  SimpleChanges,
-  ViewEncapsulation} from '@angular/core';
+  ViewEncapsulation
+} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 type InputType = 'text' | 'number' | 'email';
@@ -19,80 +17,58 @@ type InputType = 'text' | 'number' | 'email';
   styleUrls: ['input.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RlsInputComponent implements OnChanges, OnDestroy {
-  @Input()
-  public formControl?: AngularControl<any>;
+export class RlsInputComponent {
+  public formControl = input<AngularControl>();
 
-  @Input()
-  public type: InputType = 'text';
+  public type = input<InputType>('text');
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<any>;
+  public value = output<any>();
 
-  private unsubscription?: () => void;
+  private focused = signal(false);
 
-  private focused = false;
+  private localValue = signal<any>('');
 
-  protected input = signal<any>('');
+  protected inputValue = computed(() => {
+    const control = this.formControl();
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
+    return String((control ? control.value() : this.localValue()) ?? '');
+  });
 
-  public ngOnDestroy(): void {
-    this.unsubscription && this.unsubscription();
-  }
+  protected focusedInput = computed(
+    () => this.formControl()?.focused() ?? this.focused()
+  );
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { formControl } = changes;
-
-    if (formControl) {
-      this.unsubscription && this.unsubscription();
-
-      this.unsubscription = formControl.currentValue?.subscribe(
-        (value: any) => {
-          this.input.set(String(value ?? ''));
-        }
-      );
-    }
-  }
-
-  public get focusedInput(): boolean {
-    return this.formControl?.focused ?? this.focused;
-  }
-
-  public get disabledInput(): boolean {
-    return this.formControl?.disabled ?? this.disabled;
-  }
+  protected disabledInput = computed(
+    () => this.formControl()?.disabled() ?? this.disabled()
+  );
 
   public onFocus(): void {
-    this.formControl?.focus();
-    this.focused = true;
+    this.formControl()?.focus();
+    this.focused.set(true);
   }
 
   public onBlur(): void {
-    this.formControl?.blur();
-    this.formControl?.touch();
-    this.focused = false;
+    this.formControl()?.blur();
+    this.formControl()?.touch();
+    this.focused.set(false);
   }
 
   public onInput(event: Event): void {
     const { value } = event.target as HTMLInputElement;
-    const inputValue = this.type === 'number' ? +value : value;
+    const inputValue = this.type() === 'number' ? +value : value;
 
-    if (this.formControl) {
-      this.formControl.setValue(inputValue);
+    const control = this.formControl();
+
+    if (control) {
+      control.setValue(inputValue);
     } else {
-      this.input.set(inputValue);
+      this.localValue.set(inputValue);
     }
 
     this.value.emit(inputValue);

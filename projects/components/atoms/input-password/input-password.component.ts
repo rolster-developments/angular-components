@@ -1,13 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Output,
+  computed,
+  input,
+  output,
   signal,
-  SimpleChanges,
-  ViewEncapsulation} from '@angular/core';
+  ViewEncapsulation
+} from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
 
 type PasswordType = 'password' | 'text';
@@ -19,79 +17,57 @@ type PasswordType = 'password' | 'text';
   styleUrls: ['input-password.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RlsInputPasswordComponent implements OnChanges, OnDestroy {
-  @Input()
-  public formControl?: AngularControl<string>;
+export class RlsInputPasswordComponent {
+  public formControl = input<AngularControl<string>>();
 
-  @Input()
-  public type: PasswordType = 'password';
+  public type = input<PasswordType>('password');
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<string>;
+  public value = output<string>();
 
-  private unsubscription?: () => void;
+  private focused = signal(false);
 
-  private focused = false;
+  private localValue = signal('');
 
-  protected input = signal<string>('');
+  protected inputValue = computed(() => {
+    const control = this.formControl();
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
+    return String((control ? control.value() : this.localValue()) ?? '');
+  });
 
-  public ngOnDestroy(): void {
-    this.unsubscription && this.unsubscription();
-  }
+  protected focusedInput = computed(
+    () => this.formControl()?.focused() ?? this.focused()
+  );
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { formControl } = changes;
-
-    if (formControl) {
-      this.unsubscription && this.unsubscription();
-
-      this.unsubscription = formControl.currentValue?.subscribe(
-        (value: string) => {
-          this.input.set(String(value ?? ''));
-        }
-      );
-    }
-  }
-
-  public get focusedInput(): boolean {
-    return this.formControl?.focused ?? this.focused;
-  }
-
-  public get disabledInput(): boolean {
-    return this.formControl?.disabled ?? this.disabled;
-  }
+  protected disabledInput = computed(
+    () => this.formControl()?.disabled() ?? this.disabled()
+  );
 
   public onFocus(): void {
-    this.formControl?.focus();
-    this.focused = true;
+    this.formControl()?.focus();
+    this.focused.set(true);
   }
 
   public onBlur(): void {
-    this.formControl?.blur();
-    this.formControl?.touch();
-    this.focused = false;
+    this.formControl()?.blur();
+    this.formControl()?.touch();
+    this.focused.set(false);
   }
 
   public onInput(event: Event): void {
     const { value } = event.target as HTMLInputElement;
 
-    if (this.formControl) {
-      this.formControl.setValue(value);
+    const control = this.formControl();
+
+    if (control) {
+      control.setValue(value);
     } else {
-      this.input.set(value);
+      this.localValue.set(value);
     }
 
     this.value.emit(value);

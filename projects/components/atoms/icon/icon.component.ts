@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  signal,
-  SimpleChanges,
-  ViewEncapsulation} from '@angular/core';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'rls-icon',
@@ -13,20 +7,12 @@ import {
   styleUrls: ['icon.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RlsIconComponent implements OnChanges {
-  @Input()
-  public value = '';
+export class RlsIconComponent {
+  public value = input('');
 
-  @Input()
-  public skeleton = false;
+  public skeleton = input(false);
 
-  protected className = signal('');
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { value } = changes;
-
-    if (value?.currentValue) {
-      this.className.set(`rls-icon-${value.currentValue}`);
-    }
-  }
+  protected className = computed(() =>
+    this.value() ? `rls-icon-${this.value()}` : ''
+  );
 }

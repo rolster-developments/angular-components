@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'rls-progress-bar',
@@ -8,13 +8,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RlsProgressBarComponent {
-  @Input()
-  public percentage = 0;
+  public percentage = input(0);
 
-  @Input()
-  public indeterminate = false;
+  public indeterminate = input(false);
 
-  protected get width(): string {
-    return `${this.percentage}%`;
-  }
+  protected width = computed(() => `${this.percentage()}%`);
 }

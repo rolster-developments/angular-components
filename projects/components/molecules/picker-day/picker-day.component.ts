@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
+  computed,
+  effect,
+  input,
+  signal,
+  untracked,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import {
-  checkDayPicker,
   createDayPicker,
-  DayPickerProps,
+  DayPickerOptions,
   DayState,
-  WeekState} from '@rolster/components';
+  verifyDayPicker
+} from '@rolster/components';
 import { DAY_LABELS } from '@rolster/dates';
 
 @Component({
@@ -26,103 +26,61 @@ import { DAY_LABELS } from '@rolster/dates';
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule]
 })
-export class RlsPickerDayComponent implements OnInit, OnDestroy, OnChanges {
-  @Input()
-  public formControl?: AngularControl<number>;
+export class RlsPickerDayComponent {
+  public formControl = input<AngularControl<number>>();
 
-  @Input()
-  public date: Date;
+  public date = input(new Date());
 
-  @Input()
-  public month?: number;
+  public month = input<number>();
 
-  @Input()
-  public year?: number;
+  public year = input<number>();
 
-  @Input()
-  public minDate?: Date;
+  public minDate = input<Date>();
 
-  @Input()
-  public maxDate?: Date;
-
-  private unsubscription?: () => void;
-
-  private value: number;
+  public maxDate = input<Date>();
 
   protected titles = DAY_LABELS();
 
-  protected weeks: WeekState[] = [];
+  private localValue = signal(new Date().getDate());
+
+  protected day = computed(
+    () => this.formControl()?.value() ?? this.localValue()
+  );
+
+  private options = computed<DayPickerOptions>(() => ({
+    date: this.date(),
+    day: this.day(),
+    month: valueIsDefined(this.month()) ? this.month()! : this.date().getMonth(),
+    year: this.year() ?? this.date().getFullYear(),
+    maxDate: this.maxDate(),
+    minDate: this.minDate()
+  }));
+
+  protected weeks = computed(() => createDayPicker(this.options()));
 
   constructor() {
-    this.date = new Date();
-    this.month = this.date.getMonth();
-    this.year = this.date.getFullYear();
-    this.value = this.date.getDate();
-  }
-
-  public ngOnInit(): void {
-    this.renderComponent(this.createPickerProps());
-  }
-
-  public ngOnDestroy(): void {
-    this.unsubscription && this.unsubscription();
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { date, formControl, maxDate, minDate, month, year } = changes;
-
-    if (date || minDate || maxDate || month || year) {
-      const props = this.createPickerProps();
-      const day = checkDayPicker(props);
+    effect(() => {
+      const day = verifyDayPicker(this.options());
 
       if (day) {
-        this.formControl ? this.formControl.setValue(day) : (this.value = day);
-      } else {
-        this.renderComponent(props);
+        untracked(() => this.setValue(day));
       }
-    }
-
-    if (formControl) {
-      this.unsubscription && this.unsubscription();
-
-      this.unsubscription = formControl.currentValue?.subscribe(
-        (value: number) => {
-          this.setValue(value ?? this.date.getDate());
-        }
-      );
-    }
+    });
   }
 
   public onSelect({ value }: DayState): void {
     if (value) {
-      this.formControl?.setValue(value);
+      this.setValue(value);
     }
-  }
-
-  private createPickerProps(): DayPickerProps {
-    return {
-      date: this.date,
-      day: this.formControl?.value || this.value,
-      month: itIsDefined(this.month) ? this.month : this.date.getMonth(),
-      year: this.year || this.date.getFullYear(),
-      maxDate: this.maxDate,
-      minDate: this.minDate
-    };
   }
 
   private setValue(value: number): void {
-    const props = this.createPickerProps();
-    const day = checkDayPicker(props);
+    const control = this.formControl();
 
-    if (day) {
-      this.formControl?.setValue(day);
+    if (control) {
+      control.setValue(value);
     } else {
-      this.value = value;
-      this.renderComponent(props);
+      this.localValue.set(value);
     }
-  }
-
-  private renderComponent(props: DayPickerProps): void {
-    this.weeks = createDayPicker(props);
   }
 }

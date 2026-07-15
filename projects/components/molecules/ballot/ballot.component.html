@@ -1,26 +1,26 @@
 <div
   class="rls-ballot"
-  [class.rls-ballot--bordered]="bordered"
-  [class.rls-ballot--skeleton]="skeleton"
+  [class.rls-ballot--bordered]="bordered()"
+  [class.rls-ballot--skeleton]="skeleton()"
 >
-  @if (img) {
-    <rls-avatar [skeleton]="skeleton">
-      <img [src]="img" />
+  @if (img()) {
+    <rls-avatar [skeleton]="skeleton()">
+      <img [src]="img()" />
     </rls-avatar>
-  } @else if (initials) {
-    <rls-avatar [skeleton]="skeleton">
-      <span>{{ initials }}</span>
+  } @else if (initials()) {
+    <rls-avatar [skeleton]="skeleton()">
+      <span>{{ initials() }}</span>
     </rls-avatar>
   }
 
   <div class="rls-ballot__component">
-    <rls-skeleton-text class="rls-ballot__title" [active]="skeleton">
+    <rls-skeleton-text class="rls-ballot__title" [active]="skeleton()">
       <ng-content />
     </rls-skeleton-text>
 
-    @if (subtitle) {
-      <rls-skeleton-text class="rls-ballot__subtitle" [active]="skeleton">
-        <span>{{ subtitle }}</span>
+    @if (subtitle()) {
+      <rls-skeleton-text class="rls-ballot__subtitle" [active]="skeleton()">
+        <span>{{ subtitle() }}</span>
       </rls-skeleton-text>
     }
   </div>

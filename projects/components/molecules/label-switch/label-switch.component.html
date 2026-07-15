@@ -1,10 +1,10 @@
 <div
   class="rls-label-switch"
-  [class.rls-label-switch--disabled]="disabled"
-  [class.rls-label-switch--extended]="extended"
+  [class.rls-label-switch--disabled]="disabled()"
+  [class.rls-label-switch--extended]="extended()"
 >
   <div class="rls-label-switch__component" (click)="onToggle()">
-    <rls-switch [checked]="checked" [disabled]="disabled" />
+    <rls-switch [checked]="checked()" [disabled]="disabled()" />
   </div>
 
   <label class="rls-label-switch__text"> <ng-content /> </label>

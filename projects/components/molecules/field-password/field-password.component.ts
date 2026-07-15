@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  computed,
+  input,
+  output,
+  signal,
   ViewEncapsulation
 } from '@angular/core';
 import { AngularControl } from '@rolster/angular-forms';
@@ -30,39 +31,28 @@ type PasswordType = 'password' | 'text';
   ]
 })
 export class RlsFieldPasswordComponent {
-  @Input()
-  public formControl?: AngularControl<string>;
+  public formControl = input<AngularControl<string>>();
 
-  @Input()
-  public type: PasswordType = 'password';
+  public type = input<PasswordType>('password');
 
-  @Input()
-  public label = true;
+  public label = input(true);
 
-  @Input()
-  public placeholder = '';
+  public placeholder = input('');
 
-  @Input()
-  public readonly = false;
+  public readonly = input(false);
 
-  @Input()
-  public disabled = false;
+  public disabled = input(false);
 
-  @Output()
-  public value: EventEmitter<string>;
+  public value = output<string>();
 
-  protected itIsPasswordVisible = true;
+  protected itIsPasswordVisible = signal(true);
 
-  constructor() {
-    this.value = new EventEmitter();
-  }
+  protected disabledInput = computed(
+    () => this.formControl()?.disabled() ?? this.disabled()
+  );
 
-  public get disabledInput(): boolean {
-    return this.formControl?.disabled ?? this.disabled;
-  }
-
-  public onAction() {
-    this.itIsPasswordVisible = !this.itIsPasswordVisible;
+  public onAction(): void {
+    this.itIsPasswordVisible.set(!this.itIsPasswordVisible());
   }
 
   public onValue(value: string): void {

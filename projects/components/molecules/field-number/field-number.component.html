@@ -1,10 +1,10 @@
 <div
   class="rls-field-box rls-field-number"
-  [class.rls-field-box--focused]="formControl?.focused"
-  [class.rls-field-box--error]="formControl?.wrong"
-  [class.rls-field-box--disabled]="disabledInput"
+  [class.rls-field-box--focused]="formControl()?.focused()"
+  [class.rls-field-box--error]="formControl()?.wrong()"
+  [class.rls-field-box--disabled]="disabledInput()"
 >
-  @if (label) {
+  @if (label()) {
     <label class="rls-field-box__label">
       <ng-content />
     </label>
@@ -13,10 +13,10 @@
   <div class="rls-field-box__component">
     <div class="rls-field-box__body">
       <rls-input-number
-        [formControl]="formControl"
-        [placeholder]="placeholder"
-        [readonly]="readonly"
-        [disabled]="disabled"
+        [formControl]="formControl()"
+        [placeholder]="placeholder()"
+        [readonly]="readonly()"
+        [disabled]="disabled()"
         (value)="onValue($event)"
       >
       </rls-input-number>
@@ -25,7 +25,7 @@
 
   <rls-message-form-error
     className="rls-field-box__error"
-    [formControl]="formControl"
+    [formControl]="formControl()"
   >
   </rls-message-form-error>
 </div>

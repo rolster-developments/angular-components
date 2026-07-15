@@ -1,16 +1,16 @@
 <div
   class="rls-input"
-  [class.rls-input--focused]="focusedInput"
-  [class.rls-input--disabled]="disabledInput"
+  [class.rls-input--focused]="focusedInput()"
+  [class.rls-input--disabled]="disabledInput()"
 >
   <input
     class="rls-input__component"
     autocomplete="off"
-    [type]="type"
-    [placeholder]="placeholder"
-    [readonly]="readonly"
-    [value]="input()"
-    [disabled]="disabledInput"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [readonly]="readonly()"
+    [value]="inputValue()"
+    [disabled]="disabledInput()"
     (focus)="onFocus()"
     (blur)="onBlur()"
     (input)="onInput($event)"

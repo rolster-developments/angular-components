@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'rls-avatar',
@@ -8,9 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class RlsAvatarComponent {
-  @Input()
-  public rounded = false;
+  public rounded = input(false);
 
-  @Input()
-  public skeleton = false;
+  public skeleton = input(false);
 }
