@@ -1,6 +1,6 @@
 {
   "name": "@rolster/angular-components",
-  "version": "19.0.0",
+  "version": "19.1.0",
   "description": "Package containing UI components for Angular Project.",
   "module": "dist/fesm2022/rolster-angular-components.mjs",
   "esm2022": "dist/esm2022/rolster-angular-components.mjs",

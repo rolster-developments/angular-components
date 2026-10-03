@@ -363,6 +363,16 @@ The binding is optional. With a control, the component reads `value()`,
 Without a control the component keeps its own state and only reports through the
 `value` output.
 
+`rls-input` and the inputs and fields built over it honour the `formatter` and
+`formatOn` options of a control that exposes them. While the user types (or
+pastes) the component applies the formatter before writing the value, keeps the
+caret in place when the text length changes, reverts characters the formatter
+rejects even when the control signal does not change, and waits for the end of
+an IME composition before formatting. With `formatOn: 'blur'` the raw text is
+kept until the field loses focus and the control formats it. The options are
+read structurally, so the component also compiles against a version of
+`@rolster/angular-forms` that does not provide them yet.
+
 ```html
 <rls-field-date [formControl]="formDate" [maxDate]="today">
   Fecha de nacimiento
